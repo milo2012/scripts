@@ -2,9 +2,9 @@
 
 This repository contains custom tools and templates developed for penetration testing, version detection, and reconnaissance across various services and platforms.
 
-## 📁 templates/
+## 📁 nuclei-templates/
 
-The `templates/` folder includes a curated collection of [Nuclei](https://github.com/projectdiscovery/nuclei) templates that I created to assist with fingerprinting and version identification. These templates are especially useful during reconnaissance and vulnerability assessments, helping to quickly detect software versions and potential misconfigurations.
+The `nuclei-templates/` folder includes a curated collection of [Nuclei](https://github.com/projectdiscovery/nuclei) templates that I created to assist with fingerprinting and version identification. These templates are especially useful during reconnaissance and vulnerability assessments, helping to quickly detect software versions and potential misconfigurations.
 
 ## 📜 detect_esxi_version.py
 
