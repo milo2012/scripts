@@ -19,7 +19,11 @@ For example, you can use it to process payloads from:
 > https://github.com/payloadbox/xss-payload-list/blob/master/Intruder/xss-payload-list.txt
 
 Each modified payload will be tagged with a unique identifier, allowing precise identification during testing.
-  
+
+### 📡 telnet_scanner.py
+
+A lightweight Telnet detection tool. Provide it with a list of targets in `IP:port` format, and it will attempt to detect Telnet or Telnet-like services that may be missed by traditional scanners like Nmap. Useful for finding non-standard ports or obfuscated Telnet services.
+    
 ---
 
 Additional scripts and modules will be added over time to support a wider range of enumeration and exploitation tasks.
