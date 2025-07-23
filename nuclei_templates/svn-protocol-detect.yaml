@@ -1,0 +1,43 @@
+id: svn-auth-check
+
+info:
+  name: SVN Authentication Mechanisms Detection
+  author: milo2012
+  severity: info
+  description: |
+    Detects SVN (Subversion) server authentication mechanisms and identifies
+    if cleartext authentication (PLAIN/LOGIN) is supported.
+  reference:
+    - https://subversion.apache.org/
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N
+    cvss-score: 0.0
+    cwe-id: CWE-200
+  tags: svn,subversion,auth,information-disclosure
+
+network:
+  - inputs:
+      - data: "( 2 ( edit-pipeline ) 17:svn://{{Hostname}} 6:Nessus ( ) )\n"
+    host:
+      - "{{Hostname}}"
+    port: 3690
+      
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - '\(\s*success\s*\(\s*\d+\s+\d+'
+        
+      - type: regex  
+        part: body
+        regex:
+          - '\(\s*success\s*\(\s*\([^()]*\)'
+
+    extractors:
+      - type: regex
+        part: body  
+        group: 1
+        regex:
+          - '\(\s*success\s*\(\s*\(([^()]*)\)'
+        name: "sasl_mechanisms"
