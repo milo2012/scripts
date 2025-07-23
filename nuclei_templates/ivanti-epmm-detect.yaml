@@ -1,0 +1,24 @@
+id: ivanti-epmm-version
+info:
+  name: Ivanti EPMM - Version Disclosure
+  author: milo2012s
+  severity: info
+  description: Extracts Ivanti EPMM version from JS script URL
+  tags: ivanti,epmm,version,disclosure
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/mifs/c/windows/api/v2/device/registration"
+    matchers:
+      - type: word
+        words:
+          - "<script type=\"text/javascript\" src="
+        part: body
+        case-insensitive: true
+    extractors:
+      - type: regex
+        part: body
+        name: version
+        group: 1
+        regex:
+          - 'auth\.js\?VSP\s*([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'
