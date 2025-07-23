@@ -32,6 +32,10 @@ A Python script that captures and prints Cisco Discovery Protocol (CDP) and Enha
 - **Usage:** Run the script with appropriate privileges on a Linux machine connected to the target network segment.
 - **Output:** Prints details of observed CDP and EIGRP packets in real time, aiding in network topology discovery and device fingerprinting.
 
+## 🔍 check_svn_cleartext_auth.py
+
+Checks if an SVN host supports cleartext SASL authentication mechanisms such as PLAIN or LOGIN.
+
 ---
 
 Additional scripts and modules will be added over time to support a wider range of enumeration and exploitation tasks.
