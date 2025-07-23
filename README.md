@@ -24,6 +24,14 @@ Each modified payload will be tagged with a unique identifier, allowing precise 
 
 A lightweight Telnet detection tool. Provide it with a list of targets in `IP:port` format, and it will attempt to detect Telnet or Telnet-like services that may be missed by traditional scanners like Nmap. Useful for finding non-standard ports or obfuscated Telnet services.
     
+## 🕵️‍♂️ capture_cdp_eigrp.py
+
+A Python script that captures and prints Cisco Discovery Protocol (CDP) and Enhanced Interior Gateway Routing Protocol (EIGRP) packets from the network. Useful for passive network reconnaissance and gathering layer 2 and layer 3 routing information during penetration tests.
+
+- **Dependencies:** Requires Python `scapy` library.
+- **Usage:** Run the script with appropriate privileges on a Linux machine connected to the target network segment.
+- **Output:** Prints details of observed CDP and EIGRP packets in real time, aiding in network topology discovery and device fingerprinting.
+
 ---
 
 Additional scripts and modules will be added over time to support a wider range of enumeration and exploitation tasks.
