@@ -40,7 +40,47 @@ A Python script that captures and prints Cisco Discovery Protocol (CDP) and Enha
 
 Checks if an SVN host supports cleartext SASL authentication mechanisms such as PLAIN or LOGIN.
 
+
+## 🗜️ asa_firmware_patcher.py
+
+The `asa_firmware_patcher.py` script automates unpacking, modifying, and repacking Cisco ASA firmware images. It extracts the root filesystem, enables the built-in debugging line in `rcS`, and then repacks the firmware into a usable `.bin` image.
+
+- **Features**
+  - Automatically unpacks the firmware image using `binwalk` and `cpio`
+  - Extracts and optionally reuses the rootfs for manual editing
+  - Enables debugging mode by uncommenting the built-in monitor in `rcS`
+  - Repackages the modified firmware into a flashable `.bin` file
+
+- **Dependencies**
+  - Python 3
+  - `binwalk`, `cpio`, `sed`, `bash`
+  - (Optional) `unzip` and `jar` if your image contains additional archives
+
+- **Usage**
+  ```bash
+  # Basic usage (unpack, patch, repack):
+  python3 asa_firmware_patcher.py /path/to/asa9124-18-smp-k8.bin
+
+  # Use an already edited rootfs folder instead of unpacking:
+  python3 asa_firmware_patcher.py /path/to/asa9124-18-smp-k8.bin --rootfs-dir /tmp/rootfs
+
+  # Only unpack and patch rcS but do not repack:
+  python3 asa_firmware_patcher.py /path/to/asa9124-18-smp-k8.bin --no-repack
+
+  # Specify custom output file:
+  python3 asa_firmware_patcher.py /path/to/asa9124-18-smp-k8.bin -o /tmp/asa_patched.bin
+  ```
+
+- **Example output**
+  ```
+  [*] Working directory: /tmp/asa_patch_xxxxxxxx
+  [*] Extracting firmware with binwalk…
+  [*] Extracting rootfs using cpio…
+  [*] Uncommenting debugger line in rcS…
+  [*] Repacking firmware…
+  [✓] Patched firmware saved to: /tmp/asa_patched.bin
+  ```
+
+This script is especially useful for testing and research on ASA firmware images, allowing you to inspect and modify the embedded Linux rootfs quickly.
+
 ---
-
-Additional scripts and modules will be added over time to support a wider range of enumeration and exploitation tasks.
-
