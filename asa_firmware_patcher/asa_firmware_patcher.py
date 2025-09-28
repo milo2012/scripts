@@ -106,17 +106,22 @@ def main():
         with open(rcS, "r") as f:
             content = f.read()
 
+        # 1) Uncomment lina_monitor
         commented_line = r'#echo "/asa/bin/lina_monitor'
         uncommented_line = r'echo "/asa/bin/lina_monitor'
 
         if commented_line in content:
-            print("[*] Uncommenting debugger line in rcS...")
+            print("[*] Uncommenting lina_monitor line in rcS...")
             run(["sed", "-i.bak", r's/^#\(echo "\/asa\/bin\/lina_monitor.*\)/\1/', rcS])
         elif uncommented_line in content:
-            print("[*] Debugger line already enabled, continuing...")
+            print("[*] lina_monitor line already enabled, continuing...")
         else:
-            print("[!] Debugger line not found in rcS. Please check manually.")
+            print("[!] lina_monitor line not found in rcS. Please check manually.")
             sys.exit(1)
+
+        # 2) Replace ttyUSB0 lines with 1ttyS02
+        print("[*] Replacing ttyUSB0 lines with 1ttyS02 in rcS...")
+        run(["sed", "-i.bak", r's/#\(.*ttyUSB0.*\)/1ttyS02/', rcS])
 
         # Repack rootfs
         decomp_new = os.path.join(workdir, "decompressed_new.bin")

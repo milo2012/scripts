@@ -1,0 +1,91 @@
+# mount /dev/nvme0n2p1 /mnt/asav1
+# ls /mnt/asav1/asa9124-18-smp-k8.bin 
+/mnt/asav1/asa9124-18-smp-k8.bin
+# python3 asa_patch.py /mnt/asav1/asa9124-18-smp-k8.bin -h
+usage: asa_patch.py [-h] [-o OUTPUT] [--no-repack] [--rootfs-dir ROOTFS_DIR] firmware
+ASA Firmware Patch Tool
+positional arguments:
+  firmware              Path to ASA .bin firmware file
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        Path for patched firmware output
+  --no-repack           Do not repack rootfs; stop after patching rcS and exit
+  --rootfs-dir ROOTFS_DIR
+                        Use a pre-edited rootfs folder instead of unpacking
+
+# python3 asa_patch.py /mnt/asav1/asa9124-18-smp-k8.bin 
+[*] Working directory: /tmp/asa_patch_6hj05507
+[*] Running: binwalk -e /tmp/asa_patch_6hj05507/asa.bin (cwd=/tmp/asa_patch_6hj05507)
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+79872         0x13800         SHA256 hash constants, little endian
+133120        0x20800         Microsoft executable, portable (PE)
+150452        0x24BB4         gzip compressed data, maximum compression, from Unix, last modified: 2021-02-19 19:08:45
+3139027       0x2FE5D3        CRC32 polynomial table, little endian
+3975648       0x3CA9E0        gzip compressed data, has original file name: "rootfs.img", from Unix, last modified: 2021-03-28 22:25:52
+54770283      0x343BA6B       PGP RSA encrypted session key - keyid: D5210662 44903732 RSA Encrypt-Only 1024b
+
+WARNING: Extractor.execute failed to run external extractor 'unzip -P '' -o '%e'': [Errno 2] No such file or directory: 'unzip', 'unzip -P '' -o '%e'' might not be installed correctly
+
+WARNING: Extractor.execute failed to run external extractor 'jar xvf '%e'': [Errno 2] No such file or directory: 'jar', 'jar xvf '%e'' might not be installed correctly
+60208059      0x396B3BB       Zip archive data, at least v2.0 to extract, compressed size: 1968, uncompressed size: 6556, name: setuptools/archive_util.py
+60210083      0x396BBA3       Zip archive data, at least v2.0 to extract, compressed size: 35966, uncompressed size: 65536, name: setuptools/cli-32.exe
+60246120      0x3974868       Zip archive data, at least v2.0 to extract, compressed size: 39173, uncompressed size: 74752, name: setuptools/cli-64.exe
+60285364      0x397E1B4       Zip archive data, at least v2.0 to extract, compressed size: 37481, uncompressed size: 69120, name: setuptools/cli-arm-32.exe
+60322915      0x3987463       Zip archive data, at least v2.0 to extract, compressed size: 35966, uncompressed size: 65536, name: setuptools/cli.exe
+60408411      0x399C25B       Zip archive data, at least v2.0 to extract, compressed size: 39307, uncompressed size: 75264, name: setuptools/gui-64.exe
+60447789      0x39A5C2D       Zip archive data, at least v2.0 to extract, compressed size: 37227, uncompressed size: 69120, name: setuptools/gui-arm-32.exe
+60485086      0x39AEDDE       Zip archive data, at least v2.0 to extract, compressed size: 36047, uncompressed size: 65536, name: setuptools/gui.exe
+60879081      0x3A0F0E9       Zip archive data, at least v2.0 to extract, compressed size: 45934, uncompressed size: 91136, name: pip/_vendor/distlib/t32.exe
+60925092      0x3A1A4A4       Zip archive data, at least v2.0 to extract, compressed size: 46052, uncompressed size: 94720, name: pip/_vendor/distlib/t64.exe
+60971221      0x3A258D5       Zip archive data, at least v2.0 to extract, compressed size: 14518, uncompressed size: 51230, name: pip/_vendor/distlib/util.py
+61036943      0x3A3598F       Zip archive data, at least v2.0 to extract, compressed size: 45176, uncompressed size: 91648, name: pip/_vendor/distlib/w64.exe
+66578233      0x3F7E739       LZ4 compressed data
+102473198     0x61B9DEE       Zip archive data, at least v2.0 to extract, name: com/cisco/webvpn/csvrjavaloader64.dll
+103170477     0x62641AD       Zip archive data, at least v2.0 to extract, name: AliasHandlerWrapper-win64.dll
+
+[*] Running: cpio -idmv (cwd=/tmp/asa_patch_6hj05507/rootfs)
+.
+bin
+bin/domainname.net-tools
+bin/su
+bin/tar
+bin/dd.coreutils
+bin/getopt
+bin/dmesg
+[...snip...]
+525704 blocks
+[*] Uncommenting debugger line in rcS...
+[*] Running: sed -i.bak s/^#\(echo "\/asa\/bin\/lina_monitor.*\)/\1/ /tmp/asa_patch_6hj05507/rootfs/asa/scripts/rcS
+[*] Running: bash -c cd /tmp/asa_patch_6hj05507/rootfs && find . | cpio -o -H newc > /tmp/asa_patch_6hj05507/decompressed_new.bin
+525718 blocks
+[*] Running: git clone https://github.com/nccgroup/asafw (cwd=/tmp/asa_patch_6hj05507)
+Cloning into 'asafw'...
+remote: Enumerating objects: 236, done.
+remote: Counting objects: 100% (13/13), done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 236 (delta 5), reused 10 (delta 4), pack-reused 223 (from 1)
+Receiving objects: 100% (236/236), 190.85 KiB | 5.16 MiB/s, done.
+Resolving deltas: 100% (134/134), done.
+[*] Running: /usr/bin/python3 bin.py -r -f /tmp/asa_patch_6hj05507/asa.bin -g /tmp/asa_patch_6hj05507/rootfs.img.gz (cwd=/tmp/asa_patch_6hj05507/asafw)
+[bin] Repacking...
+[bin] Old gzip size: 0x62be920 bytes
+[bin] New gzip size: 0x625e111 bytes
+[bin] repack: Writing /tmp/asa_patch_6hj05507/asa-repacked.bin (107606016 bytes)...
+[✓] Patched firmware saved to: /tmp/asa_patched.bin
+[*] Original firmware backup: /tmp/asa_patch_6hj05507/asa.bin.orig
+[*] Cleaned up temporary working directory: /tmp/asa_patch_6hj05507     
+
+% qemu-system-x86_64 \
+  -machine q35,accel=tcg \
+  -cpu Nehalem \
+  -smp 4,sockets=4,cores=1,threads=1 \
+  -m 2048 \
+  -drive file=asav9-12-4-18.qcow2,format=qcow2,if=ide \
+  -serial mon:stdio \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::12005-:12005,hostfwd=udp::161-:161,hostfwd=udp::162-:162 \
+  -device e1000,netdev=net0 \
+  -nographic 2>&1 | tee asav-console.log
+                   
