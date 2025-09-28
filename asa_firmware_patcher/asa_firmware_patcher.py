@@ -43,17 +43,17 @@ def patch_rcS(rcS_path):
     uncommented_line = r'echo "/asa/bin/lina_monitor'
 
     if commented_line in content:
-        print("[*] Replacing ttyUSB0 with ttyS02 in rcS...")
-        run(["sed", "-i.bak", r's/^#\(.*ttyUSB0.*\)/\1/; s/ttyUSB0/ttyS02/g', rcS_path])
+        print("[*] Replacing ttyUSB0 with ttyS0 in rcS...")
+        run(["sed", "-i.bak", r's/^#\(.*ttyUSB0.*\)/\1/; s/ttyUSB0/ttyS0/g', rcS_path])
     elif uncommented_line in content:
         print("[*] Debugger line already enabled, continuing...")
     else:
         print("[!] Debugger line not found in rcS. Please check manually.")
         sys.exit(1)
 
-    # 2) Replace ttyUSB0 lines with 1ttyS02
-    print("[*] Replacing ttyUSB0 with ttyS02 in rcS...")
-    run(["sed", "-i.bak", r's/#\(.*ttyUSB0.*\)/1ttyS02/', rcS_path])
+    # 2) Replace ttyUSB0 lines with ttyS0
+    print("[*] Replacing ttyUSB0 with ttyS0 in rcS...")
+    run(["sed", "-i.bak", r's/#\(.*ttyUSB0.*\)/ttyS0/', rcS_path])
 
 
 def main():
