@@ -1,0 +1,3 @@
+[submodule "wildfly-version-scanner"]
+	path = wildfly-version-scanner
+	url = https://github.com/milo2012/wildfly-version-scanner.git
